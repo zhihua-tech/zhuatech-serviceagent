@@ -1,0 +1,11 @@
+/* Copyright 2026 上海如静知华信息科技有限公司 */
+package cn.zhuatech.serviceagent.config;
+import cn.zhuatech.serviceagent.model.*; import cn.zhuatech.serviceagent.repository.*; import org.springframework.boot.CommandLineRunner; import org.springframework.context.annotation.*; import org.springframework.security.crypto.password.PasswordEncoder; import java.time.LocalDate; import java.util.List;
+@Configuration public class DataInitializer {
+ @Bean CommandLineRunner seed(OperatingUnitRepository units,WorkRecordRepository records,ResourceRegisterRepository resources,ReviewRecordRepository reviews,UserRepository users,PasswordEncoder encoder){return args->{if(units.count()>0)return;
+  OperatingUnit first=units.save(new OperatingUnit("SVC-EAST","华东服务台","客户服务中心",2600)),second=units.save(new OperatingUnit("SVC-VIP","重点客户组","客户成功中心",800)),third=units.save(new OperatingUnit("SVC-QA","服务质量组","客户服务中心",1000));
+  WorkRecord a=records.save(new WorkRecord("SVC-260808-106","TICKET-DELIVERY","企业客户交付延期投诉",first,12,7,2,LocalDate.now(),WorkRecord.Status.RELEASED,"POLICY-V6")); WorkRecord b=records.save(new WorkRecord("SVC-260808-088","TICKET-ACCESS","账号访问异常批量咨询",second,18,18,0,LocalDate.now(),WorkRecord.Status.COMPLETED,"POLICY-V4")); WorkRecord c=records.save(new WorkRecord("SVC-260808-119","TICKET-REFUND","订阅退款与赔付申请",third,10,4,3,LocalDate.now().plusDays(1),WorkRecord.Status.RUNNING,"POLICY-V5"));
+  resources.saveAll(List.of(new ResourceRegister("SVC-KB-01","服务政策知识库",third,ResourceRegister.Status.RUNNING,97),new ResourceRegister("SVC-CRM-02","客户信息授权视图",first,ResourceRegister.Status.RUNNING,95),new ResourceRegister("SVC-GUARD-03","隐私与赔付审查器",second,ResourceRegister.Status.ALARM,81)));
+  reviews.saveAll(List.of(new ReviewRecord("REV-SVC-028",a,"情绪与投诉",16,2,ReviewRecord.Result.PENDING,"顾言"),new ReviewRecord("REV-SVC-017",b,"回复准确性",28,0,ReviewRecord.Result.PASSED,"林妍"),new ReviewRecord("REV-SVC-039",c,"赔付合规",12,4,ReviewRecord.Result.FAILED,"韩澈")));
+  String demo=encoder.encode("Demo@2026"); users.saveAll(List.of(new UserAccount("operator",demo,"林妍",UserAccount.Role.DOMAIN_USER,"SVC-EAST"),new UserAccount("planner",demo,"顾言",UserAccount.Role.DOMAIN_OPERATOR,null),new UserAccount("quality",demo,"服务质量负责人",UserAccount.Role.QUALITY,null),new UserAccount("admin",encoder.encode("ZhuaTech@2026"),"系统管理员",UserAccount.Role.ADMIN,null)));
+ };}}
