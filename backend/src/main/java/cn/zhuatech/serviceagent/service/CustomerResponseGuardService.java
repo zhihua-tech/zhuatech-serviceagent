@@ -8,9 +8,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/** 客户回复安全门：涉及隐私、退款、赔付或高情绪风险时升级人工坐席。 */
+/**
+ * 客户回复安全门：涉及隐私、退款、赔付或高情绪风险时升级人工坐席。
+ *
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Service
 public class CustomerResponseGuardService {
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ResponseRequest(
             @NotBlank String ticketNo,
             @NotBlank String channel,
@@ -19,12 +26,18 @@ public class CustomerResponseGuardService {
             boolean refundOrCompensation,
             boolean supervisorApproved) {}
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ResponseDecision(
             boolean sendAllowed,
             String route,
             int priority,
             List<String> controls) {}
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public ResponseDecision inspect(ResponseRequest request) {
         boolean humanReview = request.containsSensitiveData()
                 || request.refundOrCompensation()

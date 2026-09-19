@@ -1,7 +1,13 @@
 /* Copyright 2026 上海如静知华信息科技有限公司 · https://www.zhuatech.cn/ */
 package cn.zhuatech.serviceagent.config;
 import cn.zhuatech.serviceagent.model.*; import cn.zhuatech.serviceagent.repository.*; import org.springframework.boot.CommandLineRunner; import org.springframework.context.annotation.*; import org.springframework.security.crypto.password.PasswordEncoder; import java.time.LocalDate; import java.util.List;
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Configuration public class DataInitializer {
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  @Bean CommandLineRunner seed(OperatingUnitRepository units,WorkRecordRepository records,ResourceRegisterRepository resources,ReviewRecordRepository reviews,UserRepository users,PasswordEncoder encoder){return args->{if(units.count()>0)return;
   OperatingUnit first=units.save(new OperatingUnit("SVC-EAST","华东服务台","客户服务中心",2600)),second=units.save(new OperatingUnit("SVC-VIP","重点客户组","客户成功中心",800)),third=units.save(new OperatingUnit("SVC-QA","服务质量组","客户服务中心",1000));
   WorkRecord a=records.save(new WorkRecord("SVC-260808-106","TICKET-DELIVERY","企业客户交付延期投诉",first,12,7,2,LocalDate.now(),WorkRecord.Status.RELEASED,"POLICY-V6")); WorkRecord b=records.save(new WorkRecord("SVC-260808-088","TICKET-ACCESS","账号访问异常批量咨询",second,18,18,0,LocalDate.now(),WorkRecord.Status.COMPLETED,"POLICY-V4")); WorkRecord c=records.save(new WorkRecord("SVC-260808-119","TICKET-REFUND","订阅退款与赔付申请",third,10,4,3,LocalDate.now().plusDays(1),WorkRecord.Status.RUNNING,"POLICY-V5"));

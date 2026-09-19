@@ -13,9 +13,16 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 企业客户服务 SLA 编排，覆盖预警、违约升级和自动回复安全边界。 */
+/**
+ * 企业客户服务 SLA 编排，覆盖预警、违约升级和自动回复安全边界。
+ *
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Service
 public class ServiceSlaOrchestrationService {
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public Decision orchestrate(Request request) {
         int targetMinutes = switch (request.priority()) {
             case "P1" -> 15;
@@ -45,6 +52,9 @@ public class ServiceSlaOrchestrationService {
                 "SLA-" + request.ticketNo() + "-" + request.assessmentAt().toEpochSecond(), List.copyOf(controls));
     }
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record Request(@NotBlank String ticketNo,
                           @Pattern(regexp = "P[1-4]") String priority,
                           @NotNull OffsetDateTime openedAt,
@@ -54,6 +64,9 @@ public class ServiceSlaOrchestrationService {
                           boolean compensationRequested,
                           @Min(0) @Max(100) int draftConfidence) {}
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record Decision(String ticketNo, int targetMinutes, long elapsedMinutes,
                            long remainingMinutes, int consumptionPercent, String escalation,
                            boolean autoReplyAllowed, String auditTraceId, List<String> controls) {}

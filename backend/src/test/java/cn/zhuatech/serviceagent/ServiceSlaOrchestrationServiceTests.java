@@ -8,9 +8,15 @@ import java.time.OffsetDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 class ServiceSlaOrchestrationServiceTests {
     private final ServiceSlaOrchestrationService service = new ServiceSlaOrchestrationService();
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     @Test void escalatesBreachedSensitiveTicket() {
         var opened = OffsetDateTime.parse("2026-08-31T08:00:00+08:00");
         var result = service.orchestrate(new ServiceSlaOrchestrationService.Request(
@@ -20,6 +26,9 @@ class ServiceSlaOrchestrationServiceTests {
         assertThat(result.controls()).hasSizeGreaterThanOrEqualTo(2);
     }
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     @Test void permitsAuditedLowRiskDraft() {
         var opened = OffsetDateTime.parse("2026-08-31T09:00:00+08:00");
         var result = service.orchestrate(new ServiceSlaOrchestrationService.Request(
